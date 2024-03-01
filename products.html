@@ -7,6 +7,52 @@
 
     </head>
     <body>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const cart = {};
+                document.querySelectorAll('.addCart').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const product = this.closest('.product');
+                        const prodName = product.querySelector('.prodName').textContent;
+                        const price = product.querySelector('.price').textContent.replace('$', '');
+                        
+                        if (!cart[prodName]) {
+                            cart[prodName] = { price: price, quantity: 1 };
+                        } else {
+                            cart[prodName].quantity += 1;
+                        }
+                        
+                        alert(prodName + " has been added to your cart.");
+                        updateCartDisplay();
+                    });
+                });
+            
+                function updateCartDisplay() {
+                    const cartItems = document.getElementById('cartItems');
+                    cartItems.innerHTML = ''; // Clear the cart display
+                    
+                    Object.keys(cart).forEach(prodName => {
+                        const item = cart[prodName];
+                        const itemElement = document.createElement('div');
+                        itemElement.classList.add('cart-item');
+                        itemElement.innerHTML = "<p>" + prodName + " - $" + item.price +  " x " + item.quantity + "</p><button class='removeCart'>Remove</button>";
+            
+                        itemElement.querySelector('.removeCart').addEventListener('click', function() {
+                            if (cart[prodName].quantity > 1) {
+                                cart[prodName].quantity -= 1;
+                            } else {
+                                delete cart[prodName];
+                            }
+                            updateCartDisplay();
+                        });
+            
+                        cartItems.appendChild(itemElement);
+                    });
+      
+                }
+            });
+            </script>
+            
         <header>
             <img src = "./images/Car.png" width = "200px" alt = "Vroom Shop Logo">
             <h1>VROOM SHOP</h1>
@@ -87,9 +133,14 @@
                     </section>
 
             </div>
+            <div id="cart" class="cart-display">
+                <h2>Your Cart</h2>
+                <div id="cartItems"></div>
+            </div>
             </section>
             
         </table>
+
         </main>
         <footer class = 'copyright'>
             <p>&copy; 2024 Vroom Shop. All rights reserved.</p>

@@ -140,6 +140,19 @@ header {
     background-color: #45A049;
 }
 
+.removeCart {
+    background-color: #4CAF50;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    color: #FFFFFF;
+}
+
+.removeCart:hover {
+    background-color: #FF0000;
+}
+
+
 .prods {
     background-color: #DDD;
     padding: 20px;
@@ -221,4 +234,13 @@ input {
 
 .signuplink:hover{
     text-decoration: underline;
+}
+
+.signupbutton {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    opacity: 1;
 }
