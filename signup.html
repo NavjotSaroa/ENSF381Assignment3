@@ -47,56 +47,75 @@
 </footer>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const signupButton = document.querySelector('.signupbutton');
-        const messageBox = document.querySelector('.message-box');
-        const messageText = document.getElementById('message-text');
+   document.addEventListener('DOMContentLoaded', function () {
+    const signupButton = document.querySelector('.signupbutton');
+    const messageBox = document.querySelector('.message-box');
+    const messageText = document.getElementById('message-text');
 
-        signupButton.addEventListener('click', function (event) {
-            event.preventDefault();
+    signupButton.addEventListener('click', function (event) {
+        event.preventDefault();
 
-            const usernameInput = document.getElementById('username').value;
-            const passwordInput = document.getElementById('password').value;
-            const confirmPasswordInput = document.getElementById('confirmpassword').value;
-            const emailInput = document.getElementById('email').value;
+        const usernameInput = document.getElementById('username').value;
+        const passwordInput = document.getElementById('password').value;
+        const confirmPasswordInput = document.getElementById('confirmpassword').value;
+        const emailInput = document.getElementById('email').value;
 
-            
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        const usernameRegex = /^[a-zA-Z][a-zA-Z0-9_-]{2,19}$/;
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()-_=+[\]{}|;:'",.<>?/`~])[A-Za-z\d!@#$%^&*()-_=+[\]{}|;:'",.<>?/`~]{8,}$/;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-            
-            if (!emailRegex.test(emailInput)) {
-                showMessage('Invalid email format. Please enter a valid email address.', 'error');
-                return; 
-            }
+        
+        const errors = [];
 
-         
-            if (passwordInput !== confirmPasswordInput) {
-                showMessage('Passwords do not match. Please confirm your password.', 'error');
-                return; 
-            }
+        
+        if (!usernameRegex.test(usernameInput)) {
+            errors.push('Username must be between 3 and 20 characters long, start with a letter, and contain only alphanumeric characters, hyphens, and underscores.');
+        }
 
-            
+        
+        if (!passwordRegex.test(passwordInput)) {
+            errors.push('Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character.');
+        }
+
+        
+        if (passwordInput !== confirmPasswordInput) {
+            errors.push('Passwords do not match. Please confirm your password.');
+        }
+
+        
+        if (!emailRegex.test(emailInput)) {
+            errors.push('Invalid email format. Please enter a valid email address.');
+        }
+
+        
+        if (errors.length > 0) {
+            showMessage(errors.join('<br>'), 'error');
+        } else {
             showMessage('Signup successful. Thank you!', 'success');
-        });
-
-        function showMessage(message, messageType) {
-           
-            messageBox.style.border = '2px solid #f9f9f9';
-            messageBox.style.backgroundColor = '#f9f9f9';
-            messageBox.style.padding = '10px';
-            messageBox.style.margin = '20px';
-
-          
-            messageText.textContent = message;
-
-            
-            if (messageType === 'success') {
-                messageText.style.color = 'green';
-            } else if (messageType === 'error') {
-                messageText.style.color = 'red';
-            }
         }
     });
+
+    function showMessage(message, messageType) {
+        
+        messageBox.style.border = '2px solid #f9f9f9';
+        messageBox.style.backgroundColor = '#f9f9f9';
+        messageBox.style.padding = '10px';
+        messageBox.style.margin = '20px';
+
+        
+        messageText.innerHTML = message;
+
+        
+        if (messageType === 'success') {
+            messageText.style.color = 'green';
+        } else if (messageType === 'error') {
+            messageText.style.color = 'red';
+        }
+    }
+});
+
+
 </script>
 </body>
 </html>
