@@ -1,50 +1,102 @@
 <!DOCTYPE html>
-<html lang = "en">
-    <head>
-        <title>ENSF 381 Assignment1</title>
-        <link rel = "stylesheet" href = "styles.css">
-    </head>
-    <body>
-        <header>
-            <img src = "./images/Car.png" width = "200px" alt = "Vroom Shop Logo">
-            <h1>VROOM SHOP</h1>
-        </header>
-        <div class = 'navbar'>
-            <a class = 'navlink' href = "./index.html">Home</a>
-            <a class = 'navlink' href = "./products.html">Products</a>
-            <a class = 'navlink' href = "./contact.html">Contact</a>
-            <a class = 'navlink' href = "./login.html">Login</a>
-        </div>
-        <main>
-            <form class = 'loginform'>
-                <label for="username">Username:</label>
-                <input type = "text" id = "username" name = "username" required placeholder="Username: " >
-                <br>
+<html lang="en">
+<head>
+    <title>ENSF 381 Assignment1</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+    <img src="./images/Car.png" width="200px" alt="Vroom Shop Logo">
+    <h1>VROOM SHOP</h1>
+</header>
+<div class='navbar'>
+    <a class='navlink' href="./index.html">Home</a>
+    <a class='navlink' href="./products.html">Products</a>
+    <a class='navlink' href="./contact.html">Contact</a>
+    <a class='navlink' href="./login.html">Login</a>
+</div>
+<main>
+    <form class='signup-form'>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required placeholder="Username">
+        <br>
 
-                <label for="password">Password:</label>
-                <input type = "password" id = "password" name = "password" required placeholder="Password: ">
-                <br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required placeholder="Password">
+        <br>
 
-                <label for="confirmpassword">Confirm Password:</label>
-                <input type = "password" id = "password" name = "password" required placeholder="Confirm Password: ">
-                <br>
+        <label for="confirmpassword">Confirm Password:</label>
+        <input type="password" id="confirmpassword" name="confirmpassword" required placeholder="Confirm Password">
+        <br>
 
-                <label for="email">Email:</label>
-                <input type = "text" id = "email" name = "email" required placeholder="Email Address: ">
-                <br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required placeholder="Email Address">
+        <br>
 
-                
+        <button class='signupbutton'>Signup</button>
+    </form>
 
-                <button class = 'signupbutton'>Signup</button>
+    
+    <div class='message-box'>
+        <p id="message-text"></p>
+    </div>
+</main>
+<footer class='copyright'>
+    <p>&copy; 2024 Vroom Shop. All rights reserved.</p>
+    <p>Content on this site is for demonstration purposes only.</p>
+</footer>
 
-                <br>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const signupButton = document.querySelector('.signupbutton');
+        const messageBox = document.querySelector('.message-box');
+        const messageText = document.getElementById('message-text');
 
-            </form>
+        signupButton.addEventListener('click', function (event) {
+            event.preventDefault();
+
+            const usernameInput = document.getElementById('username').value;
+            const passwordInput = document.getElementById('password').value;
+            const confirmPasswordInput = document.getElementById('confirmpassword').value;
+            const emailInput = document.getElementById('email').value;
+
             
-        </main>
-        <footer class = 'copyright'>
-            <p>&copy; 2024 Vroom Shop. All rights reserved.</p>
-            <p>Content on this site is for demonstration purposes only.</p>
-        </footer>
-    </body>
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            
+            if (!emailRegex.test(emailInput)) {
+                showMessage('Invalid email format. Please enter a valid email address.', 'error');
+                return; 
+            }
+
+         
+            if (passwordInput !== confirmPasswordInput) {
+                showMessage('Passwords do not match. Please confirm your password.', 'error');
+                return; 
+            }
+
+            
+            showMessage('Signup successful. Thank you!', 'success');
+        });
+
+        function showMessage(message, messageType) {
+           
+            messageBox.style.border = '2px solid #f9f9f9';
+            messageBox.style.backgroundColor = '#f9f9f9';
+            messageBox.style.padding = '10px';
+            messageBox.style.margin = '20px';
+
+          
+            messageText.textContent = message;
+
+            
+            if (messageType === 'success') {
+                messageText.style.color = 'green';
+            } else if (messageType === 'error') {
+                messageText.style.color = 'red';
+            }
+        }
+    });
+</script>
+</body>
 </html>
